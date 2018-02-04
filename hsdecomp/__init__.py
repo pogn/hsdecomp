@@ -1,4 +1,4 @@
-import argparse
+import argparse, sys
 
 from hsdecomp import optimize, parse, show, infer, metadata
 from hsdecomp.types import *
@@ -19,7 +19,6 @@ def main():
     settings = metadata.read_settings(opts)
 
     # Parse the binary
-
     entry_pointer = StaticValue(value = settings.name_to_address[opts.entry])
 
     interpretations = {}
@@ -67,8 +66,14 @@ def main():
             pretty = show.show_pretty_pointer(settings, pointer)
             lhs = pretty
             if settings.opts.show_types and pointer in types:
-                print(pretty, "::", show.show_pretty_type(settings, types[pointer], False))
-            print(lhs, "=", show.show_pretty_interpretation(settings, interpretations[pointer]))
+                sys.stdout.write(pretty)
+                sys.stdout.write("::")
+                sys.stdout.write(show.show_pretty_type(settings, types[pointer], False))
+                print("")
+            sys.stdout.write(lhs)
+            sys.stdout.write("=")
+            sys.stdout.write(show.show_pretty_interpretation(settings, interpretations[pointer]))
+            print("")
 
             optimize.foreach_use(interpretations[pointer], lambda ptr: (function_worklist if ptr in interpretations and isinstance(interpretations[ptr], Lambda) else worklist).append(ptr))
 
