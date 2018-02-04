@@ -1,5 +1,12 @@
 # hsdecomp
+
 A decompiler for GHC-compiled Haskell
+
+## 수정 내용
+
+* `Python 2.7` 에서 일부 바이너리의 심볼들이 제대로 불러지지 않는 오류를 수정하였습니다.
+* 튜플을 출력하여서 `\n` 등의 이스케이프 시퀀스가 제대로 작동하지 않는 오류를 수정하였습니다.
+* Codegate 2018 Prequal 때 사용한 레포지토리입니다. :D
 
 ## Dependencies
 
